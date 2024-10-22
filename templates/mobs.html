@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}FMS - Mobs{% endblock %}
+
+{% block content %}
+
+<h2 style="margin-bottom: 20px;">Mobs</h2>
+
+<!-- Check if there are mobs, and display a message if none are found -->
+{% if mobs %}
+    <table class="table table-striped table-hover table-bordered"> 
+        <thead>  
+            <tr>
+                <th>Mob Name</th>
+                <th>Paddock Name</th>
+                <th>Number of Stock</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody> 
+            {% for mob in mobs %}
+                <tr>
+                    <td>{{ mob['name'] }}</td>  
+                    <td>{{ mob['paddock_name'] }}</td>  
+                    <td>{{ mob['num_stock'] }}</td>
+                    <td>
+                        <!-- Update button -->
+                        <a href="{{ url_for('update_mob', mob_id=mob.id) }}" class="btn btn-outline-secondary btn-sm" style="margin-right: 10px;">Update</a>
+                        <!-- Delete button -->
+                        <form action="{{ url_for('delete_mob', mob_id=mob.id) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure you want to delete this mob?');">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %} 
+        </tbody>   
+    </table>
+{% else %}
+    <div class="alert alert-warning" role="alert">
+        No mobs found.
+    </div>
+{% endif %}
+
+<a href="{{ url_for('create_mob') }}" class="btn btn-success" style="margin-top: 20px;">Create New Mob</a>
+
+{% endblock %}

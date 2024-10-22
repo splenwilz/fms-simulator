@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}FMS - Paddocks{% endblock %}
+
+{% block content %}
+
+<h1>Paddocks</h1>
+
+<p>Simulation Start Date: 
+    {% if session.get('curr_date') %}
+    {% if session['curr_date'] is string %}
+        {{ session['curr_date'] }}
+    {% else %}
+        {{ session['curr_date'].strftime("%d %B %Y") }}
+    {% endif %}
+{% endif %}
+</p>
+<p>Current Date: {{ curr_date.strftime("%d %B %Y") }}</p>
+<p>Number of Days Since Start: {{ num_clicks }}</p>
+
+<form method="POST" action="{{ url_for('paddocks') }}">
+    <button class="btn btn-primary" type="submit">Next Day</button>
+</form>
+
+<div class="container mt-4">
+    <div class="row">
+        <table class="table table-striped table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Mob Name</th>
+                    <th>Number of Stock</th>
+                    <th>Area (ha)</th>
+                    <th>DM per ha (kg/day)</th>
+                    <th>Total DM (kg)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for paddock in paddocks %}
+                <tr 
+                {% if paddock.dm_per_ha is not none and paddock.dm_per_ha < 1500 %}
+                    class="bg-danger"
+                {% elif paddock.dm_per_ha is not none and paddock.dm_per_ha < 1800 %}
+                    class="bg-warning"
+                {% endif %}
+                >
+                    <td>{{ paddock.id }}</td>
+                    <td>{{ paddock.paddock_name }}</td>
+                    <td>{{ paddock.mob_name or "No Mob" }}</td>
+                    <td>{{ paddock.num_stock or 0 }}</td>
+                    <td><input disabled type="number" id="area-{{ paddock.id }}" value="{{ paddock.area }}" oninput="updateTotalDM({{ paddock.id }})"></td>
+                    <td><input disabled type="number" id="dm_per_ha-{{ paddock.id }}" value="{{ paddock.dm_per_ha }}" oninput="updateTotalDM({{ paddock.id }})"></td>
+                    <td><input disabled type="number" id="total_dm-{{ paddock.id }}" value="{{ paddock.total_dm }}" readonly></td>
+                </tr>
+                {% endfor %}
+                
+                {% if not paddocks %}
+                <tr>
+                    <td colspan="7" class="text-center">No paddocks available.</td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div style="display: flex; justify-content: flex-end; margin-top: 20px;">
+    <a href="{{ url_for('create_paddock') }}" class="btn btn-success">Create New Paddock</a>
+</div>
+
+<script>
+function updateTotalDM(paddockId) {
+    const areaElement = document.getElementById(`area-${paddockId}`);
+    const dmPerHaElement = document.getElementById(`dm_per_ha-${paddockId}`);
+    const totalDMElement = document.getElementById(`total_dm-${paddockId}`);
+
+    const area = parseFloat(areaElement.value);
+    const dmPerHa = parseFloat(dmPerHaElement.value);
+
+    if (!isNaN(area) && !isNaN(dmPerHa)) {
+        const totalDM = area * dmPerHa;
+        totalDMElement.value = totalDM.toFixed(2);
+    } else {
+        totalDMElement.value = "";
+    }
+}
+</script>
+
+{% endblock %}

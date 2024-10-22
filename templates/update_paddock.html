@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Update Paddock{% endblock %}
+
+{% block content %}
+<h2>Update Paddock</h2>
+<form method="POST" action="{{ url_for('update_paddock', paddock_id=paddock.id) }}">
+    <div class="form-group">
+        <label for="paddock_name">Paddock Name:</label>
+        <input type="text" class="form-control" id="paddock_name" name="paddock_name" value="{{ paddock.name }}" required>
+    </div>
+    <div class="form-group">
+        <label for="area">Area (ha):</label>
+        <input type="number" step="0.01" class="form-control" id="area" name="area" value="{{ paddock.area }}" required>
+    </div>
+    <div class="form-group">
+        <label for="dm_per_ha">DM per ha (kg):</label>
+        <input type="number" step="0.01" class="form-control" id="dm_per_ha" name="dm_per_ha" value="{{ paddock.dm_per_ha }}" required>
+    </div>
+    <button type="submit" class="btn btn-primary mt-2">Update Paddock</button>
+</form>
+{% endblock %}

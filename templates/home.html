@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}FMS - Home{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  
+  <!-- Hero Section -->
+  <section class="hero text-center py-5">
+    <h1 class="display-4 fw-bold text-black mb-4">Welcome to Farm Management Simulator</h1>
+    <p class="fs-5 text-dark mb-5">Manage your farm with precision and simplicity. Everything you need to organize and grow, all in one place.</p>
+    <img src="{{url_for('static', filename='farm.jpg')}}" alt="Farm Image" class="img-fluid rounded" style="max-width: 70%; height: auto; filter: grayscale(100%);">
+  </section>
+
+  <!-- Current Date Section -->
+  <section class="date-section text-center my-4">
+    {% if curr_date %}
+      <p class="text-muted fs-6">Today is: <strong>{{curr_date.strftime("%d %B %Y")}}</strong></p>
+    {% endif %}
+  </section>
+
+  <!-- Information Section -->
+  <section class="info-section text-center py-4">
+    <div class="row">
+      <div class="col-md-8 mx-auto">
+        <p class="fs-4 text-dark">Easily track your crops, livestock, and farm operations with an intuitive interface built for efficiency and ease of use. Start your journey today and make managing your farm simpler than ever.</p>
+      </div>
+    </div>
+  </section>
+
+  
+</div>
+{% endblock %}

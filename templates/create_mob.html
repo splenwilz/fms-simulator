@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}FMS - Create Mob{% endblock %}
+
+{% block content %}
+<h2>Create Mob</h2>
+
+<form action="{{ url_for('create_mob') }}" method="POST" class="needs-validation" novalidate>
+    <div class="mb-3">
+        <label for="mob_name" class="form-label">Mob Name</label>
+        <input type="text" class="form-control" id="mob_name" name="mob_name" required>
+        <div class="invalid-feedback">
+            Please provide a mob name.
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label for="paddock_id" class="form-label">Paddock</label>
+        <select class="form-control" id="paddock_id" name="paddock_id" required>
+            {% for paddock in paddocks %}
+                <option value="{{ paddock.id }}">{{ paddock.name }}</option>
+            {% endfor %}
+        </select>
+        <div class="invalid-feedback">
+            Please select a paddock.
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create Mob</button>
+</form>
+
+<script>
+    // Bootstrap validation logic
+    (() => {
+        'use strict'
+        const forms = document.querySelectorAll('.needs-validation')
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+                form.classList.add('was-validated')
+            }, false)
+        })
+    })()
+</script>
+
+{% endblock %}

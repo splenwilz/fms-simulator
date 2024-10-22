@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Create Paddock{% endblock %}
+
+{% block content %}
+<h2>Create a New Paddock</h2>
+<form method="POST" action="{{ url_for('create_paddock') }}">
+    <div class="form-group">
+        <label for="paddock_id">Paddock Name</label>
+        <select class="form-control" id="paddock_id" name="paddock_id" required>
+            <option value="">-- Select Paddock --</option>
+            {% for paddock in paddocks %}
+                <option value="{{ paddock.id }}">{{ paddock.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="area">Area (ha)</label>
+        <input type="number" class="form-control" id="area" name="area" step="0.01" required>
+    </div>
+
+    <div class="form-group">
+        <label for="dm_per_ha">DM per ha (kg)</label>
+        <input type="number" class="form-control" id="dm_per_ha" name="dm_per_ha" step="0.01" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Create Paddock</button>
+</form>
+
+{% endblock %}
