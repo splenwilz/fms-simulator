@@ -328,6 +328,8 @@ def paddocks():
     )
 
 
+
+
 # @app.route("/create_paddock", methods=["GET", "POST"])
 # def create_paddock():
 #     """Create a new paddock."""
@@ -430,27 +432,32 @@ def update_paddock(paddock_id):
         return redirect(url_for("paddocks"))
     
 
-@app.route("/delete_paddock/<int:paddock_id>", methods=["POST"])
+@app.route("/delete_paddock/<int:paddock_id>", methods=["GET", "POST"])
 def delete_paddock(paddock_id):
     """Delete a paddock."""
     cursor = getCursor()
 
-    # Ensure the paddock is not associated with any mob
-    qstr = "SELECT COUNT(*) FROM mobs WHERE paddock_id = %s"
+    # Check if the paddock has any associated mobs or animals
+    qstr = """
+    SELECT COUNT(m.id) AS mob_count
+    FROM mobs m
+    WHERE m.paddock_id = %s
+    """
     cursor.execute(qstr, (paddock_id,))
     result = cursor.fetchone()
 
-    if result and result[0] > 0:
-        flash("Cannot delete paddock while it has an associated mob!", "danger")
+    if result and result['mob_count'] > 0:
+        flash("Paddock cannot be deleted because it has assigned mobs.", "danger")
         return redirect(url_for("paddocks"))
 
-    # Delete the paddock
+    # If no mobs are assigned, proceed to delete the paddock
     qstr = "DELETE FROM paddocks WHERE id = %s"
     cursor.execute(qstr, (paddock_id,))
     db_connection.commit()
 
-    flash("Paddock deleted successfully!", "success")
+    flash("Paddock deleted successfully.", "success")
     return redirect(url_for("paddocks"))
+
 
 @app.route("/stock")
 def stock():

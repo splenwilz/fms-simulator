@@ -34,6 +34,7 @@
                     <th>Area (ha)</th>
                     <th>DM per ha (kg/day)</th>
                     <th>Total DM (kg)</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -52,6 +53,12 @@
                     <td><input disabled type="number" id="area-{{ paddock.id }}" value="{{ paddock.area }}" oninput="updateTotalDM({{ paddock.id }})"></td>
                     <td><input disabled type="number" id="dm_per_ha-{{ paddock.id }}" value="{{ paddock.dm_per_ha }}" oninput="updateTotalDM({{ paddock.id }})"></td>
                     <td><input disabled type="number" id="total_dm-{{ paddock.id }}" value="{{ paddock.total_dm }}" readonly></td>
+                    <td>
+                        <a href="{{ url_for('delete_paddock', paddock_id=paddock.id) }}" class="btn btn-outline-danger btn-sm"
+                           onclick="return confirm('Are you sure you want to delete this paddock?')">
+                            Delete
+                        </a>
+                    </td>
                 </tr>
                 {% endfor %}
                 

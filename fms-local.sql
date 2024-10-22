@@ -26,7 +26,7 @@ INSERT INTO paddocks VALUES
     (1, "Stream 1", 1.22, 1500, 1.22*1500),
     (4, "Rear 1", 1.23, 2300, 1.23*2300),
     (2, "Rear 2", 1.15, 1900, 1.15*1900),
-    (12, "Barn", 0.95, 1750, 0.95*1750);
+    (12, "Barn", 0.95, 1750, 0.95*1750),
     (13, "Test", NULL, NULL, NULL),
     (14, "Test Paddock 1", NULL, NULL, NULL),
     (15, "Test Paddock 2", NULL, NULL, NULL),
