@@ -36,7 +36,7 @@ INSERT INTO paddocks VALUES
 
 CREATE TABLE mobs (
     id INT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(50) DEFAULT NULL, -- Group
+    name VARCHAR(50) DEFAULT NULL,
     paddock_id INT NOT NULL,
     PRIMARY KEY (id),
     UNIQUE INDEX paddock_idx (paddock_id),
