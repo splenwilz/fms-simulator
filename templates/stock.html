@@ -5,7 +5,7 @@
 {% block content %}
 <h2>Stock by Mob</h2>
 
-<!-- Check if mobs and animals exist -->
+<!-- Check if mobs and stock exist -->
 {% if mob_stock %}
     {% for mob_id, mob in mob_stock.items() %}
         <div class="mb-4">
@@ -19,30 +19,28 @@
                 {% endif %}
             </p>
             
-            {% if mob.animals %}
+            {% if mob.stock_entries %}
                 <table class="table table-striped table-hover table-bordered">
                     <thead>
                         <tr>
-                            <th>Animal ID</th>
-                            <th>Animal Name</th>
+                            <th>Stock ID</th>
                             <th>Age (Years)</th>
                             <th>Weight (Kg)</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for animal in mob.animals %}
+                        {% for entry in mob.stock_entries %}
                             <tr>
-                                <td>{{ animal.animal_id }}</td>
-                                <td>{{ animal.animal_name }}</td>
-                                <td>{{ animal.animal_age }}</td>
-                                <td>{{ animal.animal_weight }}</td>
+                                <td>{{ entry.stock_id }}</td>
+                                <td>{{ entry.stock_age }}</td>
+                                <td>{{ entry.stock_weight }}</td>
                                 <td>
                                     <!-- Update button -->
-                                    <a href="{{ url_for('update_animal', animal_id=animal.animal_id) }}" class="btn btn-outline-secondary btn-sm " style="margin-right: 10px;">Update</a>
+                                    <a href="{{ url_for('update_stock', stock_id=entry.stock_id) }}" class="btn btn-outline-secondary btn-sm" style="margin-right: 10px;">Update</a>
                                     <!-- Delete button -->
-                                    <form action="{{ url_for('delete_animal', animal_id=animal.animal_id) }}" method="POST" style="display:inline;">
-                                        <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure you want to delete this animal?');">Delete</button>
+                                    <form action="{{ url_for('delete_stock', stock_id=entry.stock_id) }}" method="POST" style="display:inline;">
+                                        <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure you want to delete this stock entry?');">Delete</button>
                                     </form>
                                 </td>
                             </tr>
@@ -51,7 +49,7 @@
                 </table>
             {% else %}
                 <div class="alert alert-warning">
-                    No animals in this mob.
+                    No stock in this mob.
                 </div>
             {% endif %}
         </div>

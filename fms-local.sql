@@ -107,13 +107,3 @@ INSERT INTO stock VALUES
     (1024, 1, '2022-08-24', 565.3),
     (1025, 1, '2022-09-03', 558.3),
     (1026, 7, '2023-09-24', 288.1);
-
-
--- simulator_state table to track number of clicks (days passed)
-CREATE TABLE IF NOT EXISTS simulator_state (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    days_passed INT DEFAULT 0  -- Store the number of clicks (days passed)
-);
-
--- Initialize the table with a default value if it doesn't exist
-INSERT INTO simulator_state (days_passed) VALUES (0) ON DUPLICATE KEY UPDATE days_passed = days_passed;

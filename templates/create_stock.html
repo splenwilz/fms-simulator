@@ -1,19 +1,11 @@
 {% extends "base.html" %}
 
-{% block title %}FMS - Create Animal{% endblock %}
+{% block title %}FMS - Create Stock{% endblock %}
 
 {% block content %}
-<h2>Create a New Animal</h2>
+<h2>Create a New Stock Entry</h2>
 
-<form action="{{ url_for('create_animal') }}" method="POST" class="needs-validation" novalidate>
-    <div class="mb-3">
-        <label for="animal_name" class="form-label">Animal Name</label>
-        <input type="text" class="form-control" id="animal_name" name="animal_name" required>
-        <div class="invalid-feedback">
-            Please provide an animal name.
-        </div>
-    </div>
-
+<form action="{{ url_for('create_stock') }}" method="POST" class="needs-validation" novalidate>
     <div class="mb-3">
         <label for="mob_id" class="form-label">Mob</label>
         <select class="form-control" id="mob_id" name="mob_id" required>
@@ -43,7 +35,7 @@
         </div>
     </div>
 
-    <button type="submit" class="btn btn-primary">Create Animal</button>
+    <button type="submit" class="btn btn-primary">Create Stock Entry</button>
 </form>
 
 <script>

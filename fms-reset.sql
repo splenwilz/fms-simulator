@@ -1,12 +1,6 @@
 -- Update the curr_date table
 UPDATE curr_date SET curr_date = "2024-10-29" WHERE curr_date > 0;
 
--- Reset the simulator_state table to set days_passed (clicks) to 0
-UPDATE simulator_state SET days_passed = 0 WHERE id = 1;
-
--- Delete from the animals table first to avoid foreign key constraint issues
-DELETE FROM animals WHERE id >= 0;
-
 -- Delete from the stock table
 DELETE FROM stock WHERE id >= 0;
 
