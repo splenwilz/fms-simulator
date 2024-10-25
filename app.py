@@ -303,8 +303,8 @@ def create_paddock():
     cursor = getCursor()
 
     if request.method == "GET":
-        # Fetch paddocks with NULL values for area and dm_per_ha
-        qstr = "SELECT id, name FROM paddocks WHERE area IS NULL AND dm_per_ha IS NULL"
+        # Fetch paddocks with NULL or 0 values for area and dm_per_ha
+        qstr = "SELECT id, name FROM paddocks WHERE area IS NULL OR area = 0 AND dm_per_ha IS NULL OR dm_per_ha = 0"
         cursor.execute(qstr)
         available_paddocks = cursor.fetchall()
 
